@@ -1,0 +1,22 @@
+app = 'edoc-db-mariadb-26'
+primary_region = 'sin'
+
+[build]
+  dockerfile = "Dockerfile.mariadb"
+
+[env]
+  MYSQL_DATABASE = "edoc"
+  MYSQL_USER = "user"
+
+[[mounts]]
+  source = "edoc_db_data"
+  destination = "/var/lib/mysql"
+  initial_size = "1gb"
+
+[http_service]
+  internal_port = 3306
+  force_https = false
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
